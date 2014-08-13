@@ -1,0 +1,27 @@
+#!/bin/bash
+source $OPENSHIFT_REPO_DIR/misc/openshift/func
+source $OPENSHIFT_REPO_DIR/misc/openshift/virtualenv
+
+env | sed 's/[\%]/\\&/g;s/\([^=]*\)=\(.*\)/s%${\1}%\2%/' > $OPENSHIFT_TMP_DIR/sed.script
+
+function expand_env_vars() {
+    local SRC=$1
+    local DEST=$2
+    cat $SRC | sed -f $OPENSHIFT_TMP_DIR/sed.script > $DEST
+}
+
+function copy_templates() {
+    msg_info "Creating influxdb config..."
+    expand_env_vars $TEMPLATES_DIR/influxdb.toml $INFLUXDB_DIR/config.sample.toml
+    msg_info "Creating influxdb config... done"
+
+    msg_info "Creating grafana config..."
+    expand_env_vars $TEMPLATES_DIR/grafana.js $GRAFANA_DIR/src/config.js
+    msg_info "Creating grafana config... done"
+
+    msg_info "Creating nginx config..."
+ 	expand_env_vars $TEMPLATES_DIR/nginx.conf $NGINX_DIR/conf/nginx.conf
+	msg_info "Creating nginx config... done"
+}
+
+copy_templates
