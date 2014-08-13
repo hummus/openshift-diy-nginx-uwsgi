@@ -11,16 +11,17 @@ function expand_env_vars() {
 }
 
 function copy_templates() {
-    msg_info "Creating uWSGI config..."
-    if [ ! -d $UWSGI_DIR ]; then
-        mkdir $UWSGI_DIR
-    fi    
-    expand_env_vars $TEMPLATES_DIR/uwsgi.ini $UWSGI_DIR/uwsgi.ini
-    msg_info "Creating uWSGI config... done"
+    msg_info "Creating influxdb config..."
+    expand_env_vars $TEMPLATES_DIR/influxdb.toml $INFLUXDB_DIR/config.sample.toml
+    msg_info "Creating influxdb config... done"
+
+    msg_info "Creating grafana config..."
+    expand_env_vars $TEMPLATES_DIR/grafana.js $GRAFANA_DIR/src/config.js
+    msg_info "Creating grafana config... done"
 
     msg_info "Creating nginx config..."
-    expand_env_vars $TEMPLATES_DIR/nginx.conf $NGINX_DIR/conf/nginx.conf
-    msg_info "Creating nginx config... done"
+ 	expand_env_vars $TEMPLATES_DIR/nginx.conf $NGINX_DIR/conf/nginx.conf
+	msg_info "Creating nginx config... done"
 }
 
 copy_templates
