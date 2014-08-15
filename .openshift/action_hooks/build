@@ -110,10 +110,10 @@ function check_grafana() {
         return
     fi
     cd $OPENSHIFT_TMP_DIR
-    wget GRAFANA_URL=http://grafanarel.s3.amazonaws.com/grafana-${GRAFANA_VER}.tar.gz
+    wget GRAFANA_URL=http://grafanarel.s3.amazonaws.com/grafana-${GRAFANA_VERSION}.tar.gz
     check_status $? "Download grafana"
 
-    tar zxf grafana-${GRAFANA_VER}.tar.gz
+    tar zxf grafana-${GRAFANA_VERSION}.tar.gz
 }
 
 function install_requirements() {
