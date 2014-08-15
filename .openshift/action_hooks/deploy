@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+set -x
+
 source $OPENSHIFT_REPO_DIR/misc/openshift/func
 source $OPENSHIFT_REPO_DIR/misc/openshift/virtualenv
 
@@ -11,6 +14,10 @@ function expand_env_vars() {
 }
 
 function copy_templates() {
+    msg_info "Creating nginx config..."
+    expand_env_vars $TEMPLATES_DIR/nginx.conf $NGINX_DIR/conf/nginx.conf
+    msg_info "Creating nginx config... done"
+
     msg_info "Creating influxdb config..."
     expand_env_vars $TEMPLATES_DIR/influxdb.toml $INFLUXDB_DIR/config.sample.toml
     msg_info "Creating influxdb config... done"
@@ -19,9 +26,6 @@ function copy_templates() {
     expand_env_vars $TEMPLATES_DIR/grafana.js $GRAFANA_DIR/src/config.js
     msg_info "Creating grafana config... done"
 
-    msg_info "Creating nginx config..."
- 	expand_env_vars $TEMPLATES_DIR/nginx.conf $NGINX_DIR/conf/nginx.conf
-	msg_info "Creating nginx config... done"
 }
 
 copy_templates
