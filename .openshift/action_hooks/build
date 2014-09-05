@@ -105,15 +105,17 @@ function check_nginx() {
 
 function check_grafana() {
     msg_info "Checking for grafana..."
-    if [ -d $INFLUXDB_DIR ]; then
+    if [ -d $GRAFANA_DIR ]; then
         msg_success "Checking for grafana... already installed."
         return
     fi
     cd $OPENSHIFT_TMP_DIR
-    wget GRAFANA_URL=http://grafanarel.s3.amazonaws.com/grafana-${GRAFANA_VERSION}.tar.gz
+    wget http://grafanarel.s3.amazonaws.com/grafana-${GRAFANA_VERSION}.tar.gz
     check_status $? "Download grafana"
 
     tar zxf grafana-${GRAFANA_VERSION}.tar.gz
+    mv grafana-${GRAFANA_VERSION} ${GRAFANA_DIR}
+
 }
 
 function install_requirements() {
@@ -132,4 +134,6 @@ function install_requirements() {
 check_python
 check_venv
 check_influxdb
-install_requirements
+check_nginx
+#check_grafana
+# install_requirements

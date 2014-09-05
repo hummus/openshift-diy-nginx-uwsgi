@@ -22,7 +22,7 @@ file   = "${INFLUXDB_DIR}/shared/log.txt"         # stdout to log to standard ou
 
 # Configure the admin server
 [admin]
-port   = 8080              # binding is disabled if the port isn't set
+port   = 8083              # binding is disabled if the port isn't set
 assets = "${INFLUXDB_DIR}/admin"
 
 # Configure the http api

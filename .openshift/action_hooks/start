@@ -4,4 +4,4 @@ source $OPENSHIFT_REPO_DIR/misc/openshift/virtualenv
 
 activate_virtualenv
 nohup $NGINX_DIR/sbin/nginx&
-nohup $INFLUXDB_DIR/influxdb& 
+nohup $INFLUXDB_DIR/influxdb -config=$INFLUXDB_DIR/config.toml & echo $! > $INFLUXDB_DIR/influxdb.pid &
